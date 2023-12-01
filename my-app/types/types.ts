@@ -1,25 +1,25 @@
 export interface Content {
-        idContent : number
+        id: number
         name: string
-        platform: string
-        author: string
-        genre: string
-        pic: string
-        synopsis: string
+        platform?: string
+        author?: string
+        genre?: string
+        poster_path: string
+        synopsis?: string
   }
   
   export interface Animated extends Content {
-    nbrEpisode: number
-    nbrSeason: number
+    nbrEpisode?: number
+    nbrSeason?: number
   }
 
   export interface Film extends Content {
-    duration: number;
+    duration?: number;
   }
 
   export interface Series extends Content {
-    nbrEpisode: number
-    nbrSeason: number
+    nbrEpisode?: number
+    nbrSeason?: number
   }
 
   export interface TrendingSeriesResponse {
