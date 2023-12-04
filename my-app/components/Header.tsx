@@ -1,23 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
-import SearchBar  from '../components/SearchBar'
-import handleSearch  from '../components/SearchBar'
-import { SearchBarProps } from 'react-native-screens';
-
-
+import SearchBar from '../components/SearchBar';
 
 const Header = () => {
   const categories = ['Films', 'Séries', 'Animés'];
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const handleCategorySelect = (category: string) => {
-    if (selectedCategory === category) {
-      // Désélectionne la catégorie si elle est déjà sélectionnée
-      setSelectedCategory(null);
-    } else {
-      // Sélectionne la catégorie si elle n'est pas déjà sélectionnée
-      setSelectedCategory(category as unknown as null);
-    }
+    setSelectedCategory(selectedCategory === category ? null : category);
   };
 
   const renderDropDownMenu = () => {
@@ -25,8 +15,6 @@ const Header = () => {
       return null;
     }
 
-    // Vous pouvez personnaliser le contenu du menu déroulant ici
-    // Pour l'instant, nous utilisons une simple FlatList de démonstration
     return (
       <View style={styles.dropDownMenu}>
         <FlatList
@@ -43,25 +31,55 @@ const Header = () => {
   };
 
   return (
-    <View style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', padding: 16, backgroundColor: 'black' }}>
-      <div>
-        <h1>Mon Application React avec Barre de Recherche</h1>
-        <SearchBar onSearch={(searchTerm: string) => console.log(searchTerm)} />
-      </div>
-      <Image source={require('../assets/images/logo_cinesearch.png')} style={{ width: 32, height: 32, marginBottom: 16 }} />
-      <View style={{ flexDirection: 'row' }}>
-        {categories.map((category) => (
-          <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
-            <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16 }}>{category}</Text>
-          </TouchableOpacity>
-        ))}
+    <View style={styles.headerContainer}>
+      <View style={styles.imageContainer}>
+        <Image source={require('../assets/images/logo_cinesearch.png')} style={styles.logoImage} />
       </View>
-      {renderDropDownMenu()}
+      <View style={{ marginLeft: 16, flex: 1 }}>
+        <View style={styles.headerContent}>
+          <SearchBar onSearch={(searchTerm) => console.log(searchTerm)}/>
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+          {categories.map((category) => (
+            <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
+              <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16 }}>{category}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        {renderDropDownMenu()}
       </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    height: 180,
+    padding: 16,
+    backgroundColor: 'black',
+  },
+  imageContainer: {
+    width: 180,
+    marginRight: 16,
+  },
+  logoImage: {
+    flex: 1,
+    height: null,
+    width: null,
+    resizeMode: 'cover',
+  },
+  headerContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: 16,
+    color: 'white',
+  },
   dropDownMenu: {
     position: 'absolute',
     top: 80,
