@@ -31,9 +31,18 @@ const Header = () => {
   };
 
   return (
-    <View style={styles.headerContainer}>
-      <View style={styles.imageContainer}>
-        <Image source={require('../assets/images/logo_cinesearch.png')} style={styles.logoImage} />
+    <View style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', padding: 16, backgroundColor: 'black' }}>
+      <View>
+        <Text style={{ color: 'white' }}>Mon Application React avec Barre de Recherche</Text>
+        <SearchBar onSearch={(searchTerm: string) => console.log(searchTerm)} />
+      </View>
+      <Image source={require('../assets/images/logo_cinesearch.png')} style={{ width: 32, height: 32, marginBottom: 16 }} />
+      <View style={{ flexDirection: 'row' }}>
+        {categories.map((category) => (
+          <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
+            <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16 }}>{category}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
       <View style={{ marginLeft: 16, flex: 1 }}>
         <View style={styles.headerContent}>

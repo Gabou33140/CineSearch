@@ -1,38 +1,45 @@
 import React, { useState, useCallback } from 'react';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { useFetchSearchResultsQuery } from '../features/api';
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
 }
 
-
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+  const handleInputChange = (text: string) => {
+    setSearchTerm(text);
   };
 
   const handleSearch = useCallback(() => {
     onSearch(searchTerm);
+    // Assurez-vous que useFetchSearchResultsQuery est utilisé correctement dans votre composant
     useFetchSearchResultsQuery({ searchTerm });
   }, [onSearch, searchTerm]);
 
   return (
-    <div>
-      <input
-        type="text"
+    <View>
+      <TextInput
         placeholder="Rechercher..."
         value={searchTerm}
-        onChange={handleInputChange}
+        onChangeText={handleInputChange}
+        style={styles.input}
       />
-      <button onClick={handleSearch}>Rechercher</button>
-    </div>
+      <Button title="Rechercher" onPress={handleSearch} />
+    </View>
   );
 };
 
-export default SearchBar;
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingLeft: 8,
+  },
+});
 
-function onSearch(searchTerm: any) {
-  throw new Error('Function not implemented.');
-}
+export default SearchBar;
