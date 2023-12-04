@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Image, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import SearchBar  from '../components/SearchBar'
+import handleSearch  from '../components/SearchBar'
+import { SearchBarProps } from 'react-native-screens';
+
+
 
 const Header = () => {
   const categories = ['Films', 'Séries', 'Animés'];
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  const handleCategorySelect = (category) => {
+  const handleCategorySelect = (category: string) => {
     if (selectedCategory === category) {
       // Désélectionne la catégorie si elle est déjà sélectionnée
       setSelectedCategory(null);
     } else {
       // Sélectionne la catégorie si elle n'est pas déjà sélectionnée
-      setSelectedCategory(category);
+      setSelectedCategory(category as unknown as null);
     }
   };
 
@@ -39,6 +44,10 @@ const Header = () => {
 
   return (
     <View style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', padding: 16, backgroundColor: 'black' }}>
+      <div>
+        <h1>Mon Application React avec Barre de Recherche</h1>
+        <SearchBar onSearch={(searchTerm: string) => console.log(searchTerm)} />
+      </div>
       <Image source={require('../assets/images/logo_cinesearch.png')} style={{ width: 32, height: 32, marginBottom: 16 }} />
       <View style={{ flexDirection: 'row' }}>
         {categories.map((category) => (
@@ -48,7 +57,7 @@ const Header = () => {
         ))}
       </View>
       {renderDropDownMenu()}
-    </View>
+      </View>
   );
 };
 
