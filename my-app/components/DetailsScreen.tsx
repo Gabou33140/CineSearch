@@ -1,16 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { useFetchContentDetailsQuery } from '../features/api';
-import { ContentDetailsResponse } from '../types/types';
+import { fetchContentDetailsByIdOrFallback } from '../features/api';
+import { Content } from '../types/types';
 
-interface DetailScreenProps {
-  contentId: number;
-  // Ajoute les éventuelles props nécessaires
-}
 
-const DetailScreen: React.FC<DetailScreenProps> = ({ contentId }) => {
-  const { data: contentDetails } = useFetchContentDetailsQuery(contentId);
-
+const ContentDetailScreen: React.FC<Content> = ({ id }: Content) => {
+  const contentDetails = fetchContentDetailsByIdOrFallback(id);
+  // ... afficher les détails du contenu dans ton composant
   return (
     <View>
       {/* Contenu de la page de détails du contenu, description, note, etc. */}
@@ -19,4 +15,4 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ contentId }) => {
   );
 };
 
-export default DetailScreen;
+export default ContentDetailScreen;

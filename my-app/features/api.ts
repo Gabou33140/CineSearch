@@ -172,10 +172,9 @@ export const api = createApi({
       },
     }),
 
-
-    fetchContentDetails: builder.query<Film[] | Series[] | Animated[], number>({
-      query: (contentId) => `URL_API_DETAILS_${contentId}`,
-      transformResponse: (response: Content[], meta: FetchBaseQueryMeta | undefined, arg: string): Content[] | Promise<Content[]> => {
+    fetchContentDetailsById: builder.query<Film[] | Series[], { id: number; contentType: string }>({
+      query: ({ id, contentType }) => `${contentType}/${id}?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR`,
+      transformResponse: (response: Film[] | Series[], meta: FetchBaseQueryMeta | undefined, arg: { id: number; contentType: string }): Film[] | Series[] | Promise<Film[] | Series[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.map((Content) => ({
@@ -187,7 +186,23 @@ export const api = createApi({
       },
     }),
   }),
-});
+})
+
+export const fetchContentDetailsByIdOrFallback = async (id: number) => {
+  // Essayer de récupérer les détails en tant que film
+  const movieDetails = await useFetchContentDetailsByIdQuery({ id, contentType: 'movie' }).data;
+
+  // Si les détails du film existent, les renvoyer
+  if (movieDetails) {
+    return movieDetails;
+  }
+
+  // Si les détails du film n'existent pas, essayer de les récupérer en tant que série
+  const seriesDetails = await useFetchContentDetailsByIdQuery({ id, contentType: 'tv' }).data;
+
+  // Renvoyer les détails de la série, même s'ils sont nuls
+  return seriesDetails;
+};
 
 export const {
   useFetchTrendingSeriesQuery,
@@ -202,5 +217,5 @@ export const {
   useFetchUpcomingSeriesQuery,
   useFetchUpcomingFilmsQuery,
   useFetchSearchResultsQuery,
-  useFetchContentDetailsQuery,
+  useFetchContentDetailsByIdQuery,
 } = api;
