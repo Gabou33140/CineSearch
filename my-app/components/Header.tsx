@@ -44,10 +44,10 @@ const Header = () => {
 
   return (
     <View style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', padding: 16, backgroundColor: 'black' }}>
-      <div>
-        <h1>Mon Application React avec Barre de Recherche</h1>
+      <View>
+        <Text style={{ color: 'white' }}>Mon Application React avec Barre de Recherche</Text>
         <SearchBar onSearch={(searchTerm: string) => console.log(searchTerm)} />
-      </div>
+      </View>
       <Image source={require('../assets/images/logo_cinesearch.png')} style={{ width: 32, height: 32, marginBottom: 16 }} />
       <View style={{ flexDirection: 'row' }}>
         {categories.map((category) => (
