@@ -158,9 +158,9 @@ export const api = createApi({
       },
     }),
 
-    fetchSearchResults: builder.query<Content[], string>({
-      query: (searchTerm) => `multi?api_key=6383b6e3ace31d1ff86f07bddd32d91c&query=${searchTerm}&include_adult=false&language=fr-FR&page=1`,
-      transformResponse: (response: Content[], meta: FetchBaseQueryMeta | undefined, arg: string): Content[] | Promise<Content[]> => {
+    fetchSearchResults: builder.query<Content[], { searchTerm: string }>({
+      query: ({ searchTerm }) => `multi?api_key=6383b6e3ace31d1ff86f07bddd32d91c&query=${searchTerm}&include_adult=false&language=fr-FR&page=1`,
+      transformResponse: (response: Content[], meta: FetchBaseQueryMeta | undefined, arg: { searchTerm: string }): Content[] | Promise<Content[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.map((Content) => ({
