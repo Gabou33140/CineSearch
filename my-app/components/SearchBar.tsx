@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import fetchSearchResults, { useFetchSearchResultsQuery } from '../features/api'
+import { useFetchSearchResultsQuery } from '../features/api';
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
@@ -13,10 +13,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSearch = useCallback(searchTerm: string, ) => {
+  const handleSearch = useCallback(() => {
     onSearch(searchTerm);
-    useFetchSearchResultsQuery(searchTerm);
-  };
+    useFetchSearchResultsQuery({ searchTerm });
+  }, [onSearch, searchTerm]);
 
   return (
     <div>
