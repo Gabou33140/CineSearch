@@ -15,7 +15,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   return (
     <View>
       {/* Contenu de la page d'accueil, tendances, barre de recherche, etc. */}
-      <Text style={styles.TitleContainer}>Tendances Animés</Text>
+      <Text style={[styles.TitleContainer, styles.FirstTitleContainer]}>Tendances Animés</Text>
       <FlatList
         horizontal
         data={trendingAnimated}
@@ -29,7 +29,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           </View>
         )}
         contentContainerStyle={styles.flatListContainer}
-        style={styles.flatList}
+        style={[styles.flatList, styles.flatListMarginBottom]}
       />
       <Text style={styles.TitleContainer}>Tendances Films</Text>
       <FlatList
@@ -45,7 +45,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         </View>
       )}
       contentContainerStyle={styles.flatListContainer}
-      style={styles.flatList}
+      style={[styles.flatList, styles.flatListMarginBottom]}
     />
     <Text style={styles.TitleContainer}>Tendances Séries</Text>
     <FlatList
@@ -68,16 +68,23 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 };
 
 const styles = StyleSheet.create({
+  FirstTitleContainer: {
+    marginTop: 20,
+  },
   TitleContainer: {
     paddingTop: 10, // Ajoutez un espacement en haut
     fontWeight: 'bold',
   },
   flatListContainer: {
-    paddingTop: 10, // Ajoutez un espacement en haut
     height: 130
   },
   flatList: {
+    paddingTop: 10, // Ajoutez un espacement en haut
     height: 10, // Ajustez la hauteur selon vos besoins
+    marginBottom: 100,
+  },
+  flatListMarginBottom: {
+    marginBottom: 0,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
   },
   itemContainer: {
     margin: 5,
