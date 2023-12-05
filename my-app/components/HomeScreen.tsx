@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { FlatList, View } from 'react-native';
+import { Text } from '../components/Themed';
 import { useFetchTrendingAnimatedQuery } from '../features/api';
 
 
@@ -13,7 +14,12 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   return (
     <View>
       {/* Contenu de la page d'accueil, tendances, barre de recherche, etc. */}
-      <Text>Tendances Films: {JSON.stringify(trendingContent)}</Text>
+    {/* <Text>Tendances Films: {JSON.stringify(trendingContent)}</Text> */}
+    <FlatList
+      data={trendingContent}
+      renderItem={({ item }) => <Text>{item.name} ({item.} episodes)</Text>}
+    ></FlatList>
+    <Text>Tendances Films</Text>
     </View>
   );
 };

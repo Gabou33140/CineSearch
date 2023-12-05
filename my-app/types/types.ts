@@ -7,6 +7,11 @@ export interface Content {
         poster_path: string
         synopsis?: string
   }
+
+  export interface TrendingContent {
+    id: string;
+    backdrop_path: string;
+  }
   
   export interface Animated extends Content {
     nbrEpisode?: number
@@ -25,6 +30,12 @@ export interface Content {
   export interface TrendingSeriesResponse {
     results: Series[];
     // Ajoute d'autres propriétés si nécessaire
+  }
+
+  export interface MinimalContent {
+    id: number;
+    name: string;
+    poster_path: string;
   }
   
   export interface CatalogueSeriesResponse {

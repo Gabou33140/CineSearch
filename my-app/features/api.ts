@@ -1,5 +1,5 @@
 import { FetchBaseQueryMeta, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import  { Film, Series, Animated, StreamingService, Content } from "../types/types";
+import  { Film, Series, Animated, StreamingService, Content, MinimalContent } from "../types/types";
 
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3/' }),
@@ -32,12 +32,12 @@ export const api = createApi({
       },
     }),
 
-    fetchTrendingAnimated: builder.query<Animated[], void>({
+    fetchTrendingAnimated: builder.query<MinimalContent[], void>({
       query: () => `discover/tv?api_key=6383b6e3ace31d1ff86f07bddd32d91c&include_adult=false&include_null_first_air_dates=false&language=fr-FR&page=1&sort_by=popularity.desc&with_genres=16`,
-      transformResponse: (response: Animated[], meta: FetchBaseQueryMeta | undefined, arg: void): Animated[] | Promise<Animated[]> => {
+      transformResponse: (response: {results: Animated[]}, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
-        return response.map((Animated) => ({
+        return response.results.map((Animated) => ({
           id: Animated.id,
           name: Animated.name,
           poster_path: Animated.poster_path,
@@ -158,9 +158,9 @@ export const api = createApi({
       },
     }),
 
-    fetchSearchResults: builder.query<Content[], { searchTerm: string }>({
-      query: ({ searchTerm }) => `multi?api_key=6383b6e3ace31d1ff86f07bddd32d91c&query=${searchTerm}&include_adult=false&language=fr-FR&page=1`,
-      transformResponse: (response: Content[], meta: FetchBaseQueryMeta | undefined, arg: { searchTerm: string }): Content[] | Promise<Content[]> => {
+    fetchSearchResults: builder.query<Content[], string >({
+      query: (searchTerm) => 'multi?api_key=6383b6e3ace31d1ff86f07bddd32d91c&query=${searchTerm}&include_adult=false&language=fr-FR&page=1',
+      transformResponse: (response: Content[], meta: FetchBaseQueryMeta | undefined, arg: string ): Content[] | Promise<Content[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.map((Content) => ({
@@ -219,3 +219,7 @@ export const {
   useFetchSearchResultsQuery,
   useFetchContentDetailsByIdQuery,
 } = api;
+
+export default () => {
+     // ...
+   };
