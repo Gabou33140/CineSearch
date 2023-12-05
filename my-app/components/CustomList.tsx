@@ -1,10 +1,15 @@
 // CustomList.tsx
 import React from 'react';
 import { FlatList, Image, StyleSheet, Dimensions, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/core';
 import { Text } from '../components/Themed';
 
 const windowWidth = Dimensions.get('window').width;
+
+export type RootStackParamList = {
+  DetailsScreen: { id: number } | undefined;
+};
 
 interface CustomListProps {
   data: any[];
@@ -13,11 +18,11 @@ interface CustomListProps {
   stylePropTitleList?: ViewStyle;
 }
 const CustomList: React.FC<CustomListProps> = ({ data, title, stylePropFlatList, stylePropTitleList}) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-//   const navigateToDetail = (itemId: number) => {
-//     navigation.navigate('Detail', { itemId });
-//   };
+  const navigateToDetail = (id: number) => {
+    navigation.navigate('DetailsScreen', { id });
+  };
 
   return (
     <>
@@ -27,7 +32,7 @@ const CustomList: React.FC<CustomListProps> = ({ data, title, stylePropFlatList,
         data={data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-        //   <TouchableWithoutFeedback onPress={() => navigateToDetail(item.id)}>
+          <TouchableWithoutFeedback onPress={() => navigateToDetail(item.id)}>
             <View style={styles.flatListContainer}>
               <Text style={styles.name}>{item.name}</Text>
               <Image
@@ -35,7 +40,7 @@ const CustomList: React.FC<CustomListProps> = ({ data, title, stylePropFlatList,
                 style={styles.image}
               />
             </View>
-        //   </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
         )}
         contentContainerStyle={styles.flatListContainer}
         style={[styles.flatList, styles.flatListMarginBottom, stylePropFlatList]}
