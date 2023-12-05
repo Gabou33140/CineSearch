@@ -10,19 +10,35 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const { data: trendingAnimated } = useFetchTrendingAnimatedQuery();
   const { data: trendingFilms } = useFetchTrendingFilmsQuery();
   const { data: trendingSeries } = useFetchTrendingSeriesQuery();
+  console.log(trendingFilms)
   return (
     <ScrollView>
-      {/* Contenu de la page d'accueil, tendances, barre de recherche, etc. */}
-      <CustomList data={trendingAnimated || []} title="Tendances Animés" />
-      <CustomList data={trendingFilms || []} title="Tendances Films" />
-      <CustomList data={trendingSeries || []} title="Tendances Séries" />
+      <CustomList
+        data={trendingAnimated || []}
+        title="Tendances Animés"
+        stylePropTitleList={styles.firstTitleList}
+      />
+      <CustomList
+        data={trendingFilms || []}
+        title="Tendances Films"
+      />
+      <CustomList 
+        data={trendingSeries || []}
+        title="Tendances Séries" 
+        stylePropFlatList={styles.lastList}
+      />
+
     </ScrollView>
   );
 };
 
 export default HomeScreen;
 
-// const styles = StyleSheet.create({
-//   BetweenFlatLists: {marginBottom: 50
-// }
-// });
+const styles = StyleSheet.create({
+  firstTitleList: {
+    marginTop: 20,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
+  },
+  lastList: {
+    marginBottom: 0,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
+  },
+});

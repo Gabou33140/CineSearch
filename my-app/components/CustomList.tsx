@@ -1,17 +1,18 @@
 // CustomList.tsx
 import React from 'react';
-import { FlatList, Image, StyleSheet, Dimensions, TouchableWithoutFeedback, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Dimensions, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Text } from '../components/Themed';
 
 const windowWidth = Dimensions.get('window').width;
 
 interface CustomListProps {
-  data: any[]; // Remplacez any par le type correct de vos données
+  data: any[];
   title: string;
+  stylePropFlatList?: ViewStyle;
+  stylePropTitleList?: ViewStyle;
 }
-
-const CustomList: React.FC<CustomListProps> = ({ data, title }) => {
+const CustomList: React.FC<CustomListProps> = ({ data, title, stylePropFlatList, stylePropTitleList}) => {
   const navigation = useNavigation();
 
 //   const navigateToDetail = (itemId: number) => {
@@ -20,14 +21,15 @@ const CustomList: React.FC<CustomListProps> = ({ data, title }) => {
 
   return (
     <>
-      <Text style={[styles.TitleContainer, styles.FirstTitleContainer]}>{title}</Text>
+      <Text style={[styles.TitleContainer, stylePropTitleList]}>{title}</Text>
       <FlatList
         horizontal
         data={data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
         //   <TouchableWithoutFeedback onPress={() => navigateToDetail(item.id)}>
-            <View style={styles.itemContainer}>
+            <View style={styles.flatListContainer}>
+              <Text style={styles.name}>{item.name}</Text>
               <Image
                 source={{ uri: `https://image.tmdb.org/t/p/original/${item.poster_path}` }}
                 style={styles.image}
@@ -36,15 +38,16 @@ const CustomList: React.FC<CustomListProps> = ({ data, title }) => {
         //   </TouchableWithoutFeedback>
         )}
         contentContainerStyle={styles.flatListContainer}
-        style={styles.flatList}
+        style={[styles.flatList, styles.flatListMarginBottom, stylePropFlatList]}
       />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  FirstTitleContainer: {
-    marginTop: 20,
+  name: {
+    // color: 'black',
+    width: '100%',
   },
   TitleContainer: {
     paddingTop: 10,
@@ -52,10 +55,15 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     height: 130,
+    overflowX: 'hidden',
   },
   flatList: {
-    paddingTop: 10,
-    marginBottom: 0,
+    paddingTop: 5, // Ajoutez un espacement en haut
+    marginBottom: 100,
+    overflowX: 'hidden', // Masquer les éléments qui dépassent de la zone visible
+  },
+  flatListMarginBottom: {
+    marginBottom: 20,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
   },
   itemContainer: {
     margin: 5,

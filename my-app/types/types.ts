@@ -1,6 +1,6 @@
 export interface Content {
         id: number
-        name: string
+        name?: string
         platform?: string
         author?: string
         genre?: string
@@ -20,6 +20,7 @@ export interface Content {
 
   export interface Film extends Content {
     duration?: number;
+    title: string;
   }
 
   export interface Series extends Content {

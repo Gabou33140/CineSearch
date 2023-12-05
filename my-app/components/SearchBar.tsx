@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const handleSearch = useCallback(() => {
     onSearch(searchTerm);
     // Assurez-vous que useFetchSearchResultsQuery est utilisé correctement dans votre composant
-    useFetchSearchResultsQuery({ searchTerm });
+    // useFetchSearchResultsQuery({ searchTerm });
   }, [onSearch, searchTerm]);
 
   return (

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, Image, Text, TouchableOpacity, FlatList, StyleSheet, Dimensions } from 'react-native';
 import SearchBar from '../components/SearchBar';
+
+  const windowWidth = Dimensions.get('window').width;
 
 const Header = () => {
   const categories = ['Films', 'Séries', 'Animés'];
@@ -23,12 +25,12 @@ const Header = () => {
       <View style={styles.imageContainer}>
         <Image source={require('../assets/images/logo_cinesearch.png')} style={styles.logoImage} />
       </View>
-      <View style={{ flex: 1 }}>
-        <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} />
+      <View style={{ flex: 1, marginTop: 40, marginLeft: 20 }}>
+        <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} style={styles.searchBar} />
         <View style={{ flexDirection: 'row' }}>
           {categories.map((category) => (
             <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
-              <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16 }}>{category}</Text>
+              <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16, marginTop: 20, marginLeft: 15 }}>{category}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -37,19 +39,19 @@ const Header = () => {
     </View>
   );
 
-  return (
-    <View style={styles.dropDownMenu}>
-      <FlatList
-        data={['Netflix', 'Prime Vidéo', 'Tous', 'A venir']}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => console.log(`Selected: ${item}`)}>
-            <Text style={styles.dropDownMenuItem}>{item}</Text>
-          </TouchableOpacity>
-        )}
-      />
-    </View>
-  );
+  // return (
+  //   <View style={styles.dropDownMenu}>
+  //     <FlatList
+  //       data={['Netflix', 'Prime Vidéo', 'Tous', 'A venir']}
+  //       keyExtractor={(item) => item}
+  //       renderItem={({ item }) => (
+  //         <TouchableOpacity onPress={() => console.log(`Selected: ${item}`)}>
+  //           <Text style={styles.dropDownMenuItem}>{item}</Text>
+  //         </TouchableOpacity>
+  //       )}
+  //     />
+  //   </View>
+  // );
 };
 
 const styles = StyleSheet.create({
@@ -57,18 +59,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    height: 180,
-    padding: 16,
+    height: 160,
+    width: '100%',
     backgroundColor: 'black',
   },
   imageContainer: {
-    width: 180,
-    marginRight: 16,
+    height: 130,
+    width: windowWidth * 0.3,
+    marginRight: 0,
+    marginLeft: 0,
+    padding: 0,
   },
   logoImage: {
+    width: '100%',
+    height: '100%',
     flex: 1,
-    height: null,
-    width: null,
+    // resizeMode: 'overlay', n'existe pas ! 
     resizeMode: 'cover',
   },
   headerText: {
@@ -87,6 +93,10 @@ const styles = StyleSheet.create({
   dropDownMenuItem: {
     fontSize: 16,
     paddingVertical: 8,
+  },
+
+  searchBar: {
+    backgroundColor: 'white',
   },
 });
 
