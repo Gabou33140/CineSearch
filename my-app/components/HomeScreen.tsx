@@ -1,14 +1,16 @@
 import React from 'react';
 import { FlatList, View, Image, StyleSheet, Dimensions } from 'react-native';
 import { Text } from '../components/Themed';
-import { useFetchTrendingAnimatedQuery } from '../features/api';
+import { useFetchTrendingAnimatedQuery, useFetchTrendingFilmsQuery, useFetchTrendingSeriesQuery } from '../features/api';
 
 const windowWidth = Dimensions.get('window').width;
 
 interface HomeScreenProps {}
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
-  const { data: trendingContent } = useFetchTrendingAnimatedQuery();
+  const { data: trendingAnimated } = useFetchTrendingAnimatedQuery();
+  const { data: trendingFilms } = useFetchTrendingFilmsQuery();
+  const { data: trendingSeries } = useFetchTrendingSeriesQuery();
 
   return (
     <View>
@@ -16,7 +18,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       <Text style={styles.TitleContainer}>Tendances Animés</Text>
       <FlatList
         horizontal
-        data={trendingContent}
+        data={trendingAnimated}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
@@ -29,9 +31,10 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         contentContainerStyle={styles.flatListContainer}
         style={styles.flatList}
       />
+      <Text style={styles.TitleContainer}>Tendances Films</Text>
       <FlatList
       horizontal
-      data={trendingContent}
+      data={trendingFilms}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <View style={styles.itemContainer}>
@@ -44,6 +47,22 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       contentContainerStyle={styles.flatListContainer}
       style={styles.flatList}
     />
+    <Text style={styles.TitleContainer}>Tendances Séries</Text>
+    <FlatList
+    horizontal
+    data={trendingSeries}
+    keyExtractor={(item) => item.id.toString()}
+    renderItem={({ item }) => (
+      <View style={styles.itemContainer}>
+        <Image
+          source={{ uri: `https://image.tmdb.org/t/p/original/${item.poster_path}` }}
+          style={styles.image}
+        />
+      </View>
+    )}
+    contentContainerStyle={styles.flatListContainer}
+    style={styles.flatList}
+  />
   </View>
   );
 };

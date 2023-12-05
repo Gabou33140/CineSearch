@@ -6,10 +6,10 @@ export const api = createApi({
   endpoints: (builder) => ({
     fetchTrendingSeries: builder.query<Series[], void>({
       query: () => `discover/tv?api_key=6383b6e3ace31d1ff86f07bddd32d91c&include_adult=false&include_null_first_air_dates=false&language=fr-FR&page=1&sort_by=popularity.desc&without_genres=16`,
-      transformResponse: (response: Series[], meta: FetchBaseQueryMeta | undefined, arg: void): Series[] | Promise<Series[]> => {
+      transformResponse: (response: {results: Series[]}, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
-        return response.map((Series) => ({
+        return response.results.map((Series) => ({
           id: Series.id,
           name: Series.name,
           poster_path: Series.poster_path,
@@ -20,10 +20,10 @@ export const api = createApi({
 
     fetchTrendingFilms: builder.query<Film[], void>({
       query: () => `trending/movie/week?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR`,
-      transformResponse: (response: Film[], meta: FetchBaseQueryMeta | undefined, arg: void): Film[] | Promise<Film[]> => {
+      transformResponse: (response: {results: Film[]}, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
-        return response.map((Film) => ({
+        return response.results.map((Film) => ({
           id: Film.id,
           name: Film.name,
           poster_path: Film.poster_path,
