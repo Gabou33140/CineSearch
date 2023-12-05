@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { useFetchTrendingContentQuery } from '../features/api';
-import { TrendingContentResponse } from '../types/types';
+import { useFetchTrendingAnimatedQuery } from '../features/api';
+
 
 interface HomeScreenProps {
   // Ajoute les éventuelles props nécessaires
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
-  const { data: trendingContent } = useFetchTrendingContentQuery('films');
+  const { data: trendingContent } = useFetchTrendingAnimatedQuery();
 
   return (
     <View>
