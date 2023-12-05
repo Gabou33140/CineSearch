@@ -11,7 +11,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const { data: trendingAnimated } = useFetchTrendingAnimatedQuery();
   const { data: trendingFilms } = useFetchTrendingFilmsQuery();
   const { data: trendingSeries } = useFetchTrendingSeriesQuery();
-
+  console.log(trendingFilms)
   return (
     <View>
       {/* Contenu de la page d'accueil, tendances, barre de recherche, etc. */}
@@ -22,6 +22,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
+            <Text style={styles.name}>{item.name}</Text>
             <Image
               source={{ uri: `https://image.tmdb.org/t/p/original/${item.poster_path}` }}
               style={styles.image}
@@ -33,20 +34,21 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       />
       <Text style={styles.TitleContainer}>Tendances Films</Text>
       <FlatList
-      horizontal
-      data={trendingFilms}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <View style={styles.itemContainer}>
-          <Image
-            source={{ uri: `https://image.tmdb.org/t/p/original/${item.poster_path}` }}
-            style={styles.image}
-          />
-        </View>
-      )}
-      contentContainerStyle={styles.flatListContainer}
-      style={[styles.flatList, styles.flatListMarginBottom]}
-    />
+        horizontal
+        data={trendingFilms}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.itemContainer}>
+            <Text style={styles.name}>{item.name}</Text>
+            <Image
+              source={{ uri: `https://image.tmdb.org/t/p/original/${item.poster_path}` }}
+              style={styles.image}
+            />
+          </View>
+        )}
+        contentContainerStyle={styles.flatListContainer}
+        style={[styles.flatList, styles.flatListMarginBottom]}
+      />
     <Text style={styles.TitleContainer}>Tendances Séries</Text>
     <FlatList
     horizontal
@@ -54,6 +56,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     keyExtractor={(item) => item.id.toString()}
     renderItem={({ item }) => (
       <View style={styles.itemContainer}>
+        <Text style={styles.name}>{item.name}</Text>
         <Image
           source={{ uri: `https://image.tmdb.org/t/p/original/${item.poster_path}` }}
           style={styles.image}
@@ -69,32 +72,42 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
 const styles = StyleSheet.create({
   FirstTitleContainer: {
-    marginTop: 20,
+    marginTop: 5,
   },
   TitleContainer: {
-    paddingTop: 10, // Ajoutez un espacement en haut
+    paddingTop: 3, // Ajoutez un espacement en haut
     fontWeight: 'bold',
   },
   flatListContainer: {
-    height: 130
+    height: '100%',
+    overflowX: 'hidden',
   },
   flatList: {
-    paddingTop: 10, // Ajoutez un espacement en haut
-    height: 10, // Ajustez la hauteur selon vos besoins
+    paddingTop: 5, // Ajoutez un espacement en haut
     marginBottom: 100,
+    overflowX: 'hidden', // Masquer les éléments qui dépassent de la zone visible
   },
   flatListMarginBottom: {
-    marginBottom: 0,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
+    marginBottom: 5,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
   },
   itemContainer: {
+    //position: 'relative',
     margin: 5,
     width: windowWidth * 0.5, // Réduisez la largeur du conteneur
+    height: 130,
+  },
+  name: {
+    color: 'white',
+    width: '100%',
   },
   image: {
     flex: 1,
     width: '100%',
     aspectRatio: 16 / 9,
     borderRadius: 8,
+    margin: 5,
+    marginLeft: 0,
+    marginRight: 10,
   },
 });
 

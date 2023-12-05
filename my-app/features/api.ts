@@ -18,14 +18,15 @@ export const api = createApi({
       },
     }),
 
-    fetchTrendingFilms: builder.query<Film[], void>({
+    fetchTrendingFilms: builder.query<MinimalContent[], void>({
       query: () => `trending/movie/week?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR`,
       transformResponse: (response: {results: Film[]}, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
+        console.log(response.results)
         return response.results.map((Film) => ({
           id: Film.id,
-          name: Film.name,
+          name: Film.title,
           poster_path: Film.poster_path,
           // ... autres propriétés que tu veux inclure
         }));
