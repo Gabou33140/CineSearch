@@ -15,39 +15,16 @@ const Header = () => {
       return null;
     }
 
-    return (
-      <View style={styles.dropDownMenu}>
-        <FlatList
-          data={['Netflix', 'Prime Vidéo', 'Tous', 'A venir']}
-          keyExtractor={(item) => item}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => console.log(`Selected: ${item}`)}>
-              <Text style={styles.dropDownMenuItem}>{item}</Text>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-    );
+    
   };
 
   return (
-    <View style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', padding: 16, backgroundColor: 'black' }}>
-      <View>
-        <Text style={{ color: 'white' }}>Mon Application React avec Barre de Recherche</Text>
-        <SearchBar onSearch={(searchTerm: string) => console.log(searchTerm)} />
+    <View style={styles.headerContainer}>
+      <View style={styles.imageContainer}>
+        <Image source={require('../assets/images/logo_cinesearch.png')} style={styles.logoImage} />
       </View>
-      <Image source={require('../assets/images/logo_cinesearch.png')} style={{ width: 32, height: 32, marginBottom: 16 }} />
-      <View style={{ flexDirection: 'row' }}>
-        {categories.map((category) => (
-          <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
-            <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16 }}>{category}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <View style={{ marginLeft: 16, flex: 1 }}>
-        <View style={styles.headerContent}>
-          <SearchBar onSearch={(searchTerm) => console.log(searchTerm)}/>
-        </View>
+      <View style={{ flex: 1 }}>
+        <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} />
         <View style={{ flexDirection: 'row' }}>
           {categories.map((category) => (
             <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
@@ -57,6 +34,20 @@ const Header = () => {
         </View>
         {renderDropDownMenu()}
       </View>
+    </View>
+  );
+
+  return (
+    <View style={styles.dropDownMenu}>
+      <FlatList
+        data={['Netflix', 'Prime Vidéo', 'Tous', 'A venir']}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => console.log(`Selected: ${item}`)}>
+            <Text style={styles.dropDownMenuItem}>{item}</Text>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 };
@@ -79,11 +70,6 @@ const styles = StyleSheet.create({
     height: null,
     width: null,
     resizeMode: 'cover',
-  },
-  headerContent: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   headerText: {
     fontSize: 16,
