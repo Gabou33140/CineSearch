@@ -21,7 +21,7 @@ const CustomList: React.FC<CustomListProps> = ({ data, title, stylePropFlatList,
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const navigateToDetail = (id: number) => {
-    navigation.navigate('DetailsScreen', { id });
+    navigation.navigate('details', { id });
   };
 
   return (
