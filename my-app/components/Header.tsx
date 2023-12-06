@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, Text, TouchableOpacity, FlatList, StyleSheet, Dimensions } from 'react-native';
 import SearchBar from '../components/SearchBar';
 
-  const windowWidth = Dimensions.get('window').width;
+const windowWidth = Dimensions.get('window').width;
 
 const Header = () => {
   const categories = ['Films', 'Séries', 'Animés'];
@@ -25,14 +25,16 @@ const Header = () => {
       <View style={styles.imageContainer}>
         <Image source={require('../assets/images/logo_cinesearch.png')} style={styles.logoImage} />
       </View>
-      <View style={{ flex: 1, marginTop: 40, marginLeft: 20 }}>
-        <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} style={styles.searchBar} />
+      <View style={{ flex: 1, marginTop: 20, marginLeft: 20 }}>
         <View style={{ flexDirection: 'row' }}>
           {categories.map((category) => (
             <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
-              <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16, marginTop: 2, marginLeft: 2 }}>{category}</Text>
+              <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16, marginTop: 20, marginLeft: 15}}>{category}</Text>
             </TouchableOpacity>
           ))}
+        </View>
+        <View style={styles.searchContainer}>
+          <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} />
         </View>
         {renderDropDownMenu()}
       </View>
@@ -57,11 +59,18 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     padding: 0,
   },
+  searchContainer: {
+    flex: 1,
+    justifyContent: 'center',  // Centrer verticalement
+    marginLeft: 20,
+    alignItems: 'center',
+  },
   logoImage: {
     width: '100%',
-    eight: '100%',
+    height: '100%',
     flex: 1,
-    resizeMode: 'overlay',
+    // resizeMode: 'overlay', n'existe pas ! 
+    resizeMode: 'cover',
   },
   headerText: {
     fontSize: 16,
@@ -79,10 +88,6 @@ const styles = StyleSheet.create({
   dropDownMenuItem: {
     fontSize: 16,
     paddingVertical: 8,
-  },
-
-  searchBar: {
-    backgroundColor: 'white',
   },
 });
 

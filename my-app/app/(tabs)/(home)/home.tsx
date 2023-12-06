@@ -1,19 +1,16 @@
 import React from 'react';
+import HomeScreen from '../../../components/HomeScreen';
+import { View } from '../../../components/Themed';
 import { ScrollView, StyleSheet } from 'react-native';
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import Header from '../../components/Header';
-import HomeScreen from '../../components/HomeScreen';
+import Header from '../../../components/Header';
 
-export default function TabOneScreen() {
+export default function TabHome() {
   return (
     <View style={styles.container}>
       <ScrollView>
         <Header />  
         <HomeScreen  />
       </ScrollView>
-      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" /> */}
     </View>
     
   );
@@ -36,5 +33,3 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
-
-

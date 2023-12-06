@@ -4,7 +4,7 @@ export interface Content {
         platform?: string
         author?: string
         genre?: string
-        poster_path: string
+        poster_path?: string
         synopsis?: string
   }
 
