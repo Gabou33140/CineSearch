@@ -30,7 +30,7 @@ const Header = () => {
         <View style={{ flexDirection: 'row' }}>
           {categories.map((category) => (
             <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
-              <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16, marginTop: 20, marginLeft: 15 }}>{category}</Text>
+              <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 16, marginTop: 2, marginLeft: 2 }}>{category}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -39,19 +39,6 @@ const Header = () => {
     </View>
   );
 
-  // return (
-  //   <View style={styles.dropDownMenu}>
-  //     <FlatList
-  //       data={['Netflix', 'Prime Vidéo', 'Tous', 'A venir']}
-  //       keyExtractor={(item) => item}
-  //       renderItem={({ item }) => (
-  //         <TouchableOpacity onPress={() => console.log(`Selected: ${item}`)}>
-  //           <Text style={styles.dropDownMenuItem}>{item}</Text>
-  //         </TouchableOpacity>
-  //       )}
-  //     />
-  //   </View>
-  // );
 };
 
 const styles = StyleSheet.create({
@@ -59,7 +46,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    height: 160,
+    height: 120,
     width: '100%',
     backgroundColor: 'black',
   },

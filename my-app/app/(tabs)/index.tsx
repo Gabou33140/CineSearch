@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
 import Header from '../../components/Header';
@@ -19,6 +18,8 @@ export default function TabOneScreen() {
     
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

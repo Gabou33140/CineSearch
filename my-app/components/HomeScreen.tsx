@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   },
   flatList: {
     paddingTop: 5, // Ajoutez un espacement en haut
+    paddingRight: 5, // Ajoutez un espacement à droite
     marginBottom: 100,
     overflowX: 'hidden', // Masquer les éléments qui dépassent de la zone visible
   },
@@ -92,9 +93,9 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     //position: 'relative',
-    margin: 5,
+    margin: 0,
     width: windowWidth * 0.5, // Réduisez la largeur du conteneur
-    height: 130,
+    height: 150,
   },
   name: {
     color: 'white',
