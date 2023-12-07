@@ -14,23 +14,21 @@ interface DisplayDetailsProps {
 }
 
 const ContentDetails: React.FC<ContentDetailsProps> = ({ id }) => {
-  const { data: dataMovie, isLoading: isMovieLoading } = useFetchContentDetailsByIdQuery({ id: id, contentType: 'Film' });
-  const { data: dataSeries, isLoading: isTVLoading }= useFetchContentDetailsByIdQuery({ id: id, contentType: 'Serie' });
+  const { data: dataMovie, isLoading: isMovieLoading } = useFetchContentDetailsByIdQuery({ id: id, contentType: 'movie' });
+  const { data: dataSeries, isLoading: isTVLoading }= useFetchContentDetailsByIdQuery({ id: id, contentType: 'tv' });
   // Render les détails du contenu dans votre composant
+
+  console.log(id);
   return (
     <View>
       {isMovieLoading || isTVLoading ? (
         <Text>Chargement...</Text>
       ) : (
-        console.log(dataMovie || dataSeries),
         <View>
 
           {dataMovie || dataSeries ? 
           <DisplayDetails contentType={dataMovie ? 'Film' : 'Serie'} content={dataMovie || dataSeries} /> 
           : <Text>Aucuns détails disponibles</Text>}
-
-          <Text>{(dataSeries as Series)?.nbrSeason || ''}</Text>
-
 
         </View>
       )}
