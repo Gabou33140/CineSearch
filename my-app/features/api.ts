@@ -187,7 +187,7 @@ export const api = createApi({
       },
     }),
 
-    fetchContentDetailsById: builder.query<Film | Series | Animated, { id: number; contentType: string }>({
+    fetchContentDetailsById: builder.query<Film | Series | Animated, { id: number; contentType: 'movie' | 'tv' }>({
       query: ({ id, contentType }) => `${contentType}/${id}?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR`,
       transformResponse: (response: any, meta: FetchBaseQueryMeta | undefined, arg: { id: number; contentType: string }): Film | Series | Animated | Promise<Film | Series | Animated> => {
         if (arg.contentType === 'tv') {
