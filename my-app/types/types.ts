@@ -35,8 +35,9 @@ export interface Content {
 
   export interface MinimalContent {
     id: number;
-    name: string;
+    name?: string;
     poster_path: string;
+    title?: string;
   }
   
   export interface CatalogueSeriesResponse {

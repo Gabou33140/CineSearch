@@ -4,7 +4,7 @@ import  { Film, Series, Animated, StreamingService, Content, MinimalContent } fr
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://api.themoviedb.org/3/' }),
   endpoints: (builder) => ({
-    fetchTrendingSeries: builder.query<Series[], void>({
+    fetchTrendingSeries: builder.query<MinimalContent[], void>({
       query: () => `discover/tv?api_key=6383b6e3ace31d1ff86f07bddd32d91c&include_adult=false&include_null_first_air_dates=false&language=fr-FR&page=1&sort_by=popularity.desc&without_genres=16`,
       transformResponse: (response: {results: Series[]}, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
@@ -12,7 +12,7 @@ export const api = createApi({
         return response.results.map((Series) => ({
           id: Series.id,
           name: Series.name,
-          poster_path: Series.poster_path,
+          poster_path: Series.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -27,7 +27,7 @@ export const api = createApi({
         return response.results.map((Film) => ({
           id: Film.id,
           name: Film.title,
-          poster_path: Film.poster_path,
+          poster_path: Film.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -41,7 +41,7 @@ export const api = createApi({
         return response.results.map((Animated) => ({
           id: Animated.id,
           name: Animated.name,
-          poster_path: Animated.poster_path,
+          poster_path: Animated.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -55,7 +55,7 @@ export const api = createApi({
         return response.results.map((Film) => ({
           id: Film.id,
           name: Film.title,
-          poster_path: Film.poster_path,
+          poster_path: Film.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -69,7 +69,7 @@ export const api = createApi({
         return response.results.map((Film) => ({
           id: Film.id,
           name: Film.title,
-          poster_path: Film.poster_path,
+          poster_path: Film.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -83,7 +83,7 @@ export const api = createApi({
         return response.results.map((Series) => ({
           id: Series.id,
           name: Series.name,
-          poster_path: Series.poster_path,
+          poster_path: Series.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -97,21 +97,21 @@ export const api = createApi({
         return response.results.map((Series) => ({
           id: Series.id,
           name: Series.name,
-          poster_path: Series.poster_path,
+          poster_path: Series.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
     }),
 
-    fetchAmazonAnimated: builder.query<Animated[], void>({
+    fetchAmazonAnimated: builder.query<MinimalContent[], void>({
       query: () => `discover/tv?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR&sort_by=primary_release_date.desc&with_watch_providers=119&watch_region=FR&with_genres=16`,
-      transformResponse: (response: {results: Animated[]}, meta: FetchBaseQueryMeta | undefined, arg: void): Animated[] | Promise<Animated[]> => {
+      transformResponse: (response: {results: Animated[]}, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Animated) => ({
           id: Animated.id,
           name: Animated.name,
-          poster_path: Animated.poster_path,
+          poster_path: Animated.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -125,7 +125,7 @@ export const api = createApi({
         return response.results.map((Animated) => ({
           id: Animated.id,
           name: Animated.name,
-          poster_path: Animated.poster_path,
+          poster_path: Animated.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -133,27 +133,41 @@ export const api = createApi({
 
     fetchUpcomingSeries: builder.query<MinimalContent[], void>({
       query: () => `tv/on_the_air?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR&page=1`,
-      transformResponse: (response: Series[], meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
+      transformResponse: (response: {results: Series[], meta: FetchBaseQueryMeta | undefined, arg: void}): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
-        return response.map((Series) => ({
+        return response.results.map((Series) => ({
           id: Series.id,
           name: Series.name,
-          poster_path: Series.poster_path,
+          poster_path: Series.poster_path || '',
           // ... autres propriétés que tu veux inclure
         }));
       },
     }),
 
     fetchUpcomingFilms: builder.query<MinimalContent[], void>({
-      query: () => `Umovie/upcoming?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR&page=1`,
-      transformResponse: (response: Film[], meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
+      query: () => `movie/upcoming?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR&page=1`,
+      transformResponse: (response: { results: Film[] }, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
-        return response.map((Film) => ({
+        return response.results.map((Film) => ({
           id: Film.id,
-          name: Film.name,
-          poster_path: Film.poster_path,
+          name: Film.title,
+          poster_path: Film.poster_path || '',
+          // ... autres propriétés que tu veux inclure
+        }));
+      },
+    }),
+
+    fetchUpcomingAnimated: builder.query<MinimalContent[], void>({
+      query: () => `Umovie/upcoming?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR&page=1`,
+      transformResponse: (response: Animated[], meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
+        // Ici, tu peux manipuler la réponse selon tes besoins
+        // Par exemple, sélectionner uniquement certaines propriétés
+        return response.map((Animated) => ({
+          id: Animated.id,
+          name: Animated.name,
+          poster_path: Animated.poster_path,
           // ... autres propriétés que tu veux inclure
         }));
       },
@@ -189,36 +203,33 @@ export const api = createApi({
   }),
 })
 
-export const fetchContentDetailsByIdOrFallback = async (id: number) => {
-  // Essayer de récupérer les détails en tant que film
-  const movieDetails = await useFetchContentDetailsByIdQuery({ id, contentType: 'movie' }).data;
-
-  // Si les détails du film existent, les renvoyer
-  if (movieDetails) {
-    return movieDetails;
-  }
-
-  // Si les détails du film n'existent pas, essayer de les récupérer en tant que série
-  const seriesDetails = await useFetchContentDetailsByIdQuery({ id, contentType: 'tv' }).data;
-
-  // Renvoyer les détails de la série, même s'ils sont nuls
-  return seriesDetails;
-};
-
 export const {
-  useFetchTrendingSeriesQuery,
-  useFetchTrendingFilmsQuery,
+  useLazyFetchTrendingSeriesQuery,
+  useLazyFetchTrendingFilmsQuery,
+  useLazyFetchTrendingAnimatedQuery,
+  useLazyFetchNetflixSeriesQuery,
+  useLazyFetchAmazonSeriesQuery,
+  useLazyFetchAmazonFilmsQuery,
+  useLazyFetchNetflixFilmsQuery,
+  useLazyFetchAmazonAnimatedQuery,
+  useLazyFetchNetflixAnimatedQuery,
+  useLazyFetchUpcomingSeriesQuery,
+  useLazyFetchUpcomingFilmsQuery,
+  useLazyFetchUpcomingAnimatedQuery,
+  useLazyFetchSearchResultsQuery,
+  useLazyFetchContentDetailsByIdQuery,
   useFetchTrendingAnimatedQuery,
-  useFetchNetflixSeriesQuery,
-  useFetchAmazonSeriesQuery,
-  useFetchAmazonFilmsQuery,
-  useFetchNetflixFilmsQuery,
+  useFetchTrendingFilmsQuery,
+  useFetchTrendingSeriesQuery,
   useFetchAmazonAnimatedQuery,
+  useFetchAmazonFilmsQuery,
+  useFetchAmazonSeriesQuery,
   useFetchNetflixAnimatedQuery,
-  useFetchUpcomingSeriesQuery,
+  useFetchNetflixFilmsQuery,
+  useFetchNetflixSeriesQuery,
+  useFetchUpcomingAnimatedQuery,
   useFetchUpcomingFilmsQuery,
-  useFetchSearchResultsQuery,
-  useFetchContentDetailsByIdQuery,
+  useFetchUpcomingSeriesQuery,
 } = api;
 
 export default () => {
