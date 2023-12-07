@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import { useFetchSearchResultsQuery } from '../features/api';
 
 interface SearchBarProps {
@@ -16,29 +16,37 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const handleSearch = useCallback(() => {
     onSearch(searchTerm);
     // Assurez-vous que useFetchSearchResultsQuery est utilisé correctement dans votre composant
-    useFetchSearchResultsQuery({ searchTerm });
+    // useFetchSearchResultsQuery({ searchTerm });
   }, [onSearch, searchTerm]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
-        placeholder="Rechercher..."
+        placeholder="Films, séries, animés..."
         value={searchTerm}
         onChangeText={handleInputChange}
+        onSubmitEditing={handleSearch}  // Cette fonction sera appelée lorsque l'utilisateur appuie sur Entrée
         style={styles.input}
       />
-      <Button title="Rechercher" onPress={handleSearch} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   input: {
+    flex: 1,
     height: 40,
     borderColor: 'gray',
+    backgroundColor: 'white',
     borderWidth: 1,
     marginBottom: 10,
+    marginRight: 10,
     paddingLeft: 8,
+    backgroundColor: 'white',
   },
 });
 

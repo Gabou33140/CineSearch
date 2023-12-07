@@ -24,30 +24,17 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
       }}>
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
-          title: 'Tab One',
+          title: 'Tendances',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+         headerShown: false,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="(catalogue)"
         options={{
-          title: 'Tab Two',
+          title: 'Catalogue',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />

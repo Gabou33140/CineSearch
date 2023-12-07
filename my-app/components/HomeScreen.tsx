@@ -1,60 +1,44 @@
 import React from 'react';
-import { FlatList, View, Image, Dimensions, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Text } from '../components/Themed';
-import { useFetchTrendingAnimatedQuery } from '../features/api';
-import { MinimalContent } from '../types/types'; // Add this import
+import { useFetchTrendingAnimatedQuery, useFetchTrendingFilmsQuery, useFetchTrendingSeriesQuery } from '../features/api';
+import CustomList from './CustomList';
 
-
-interface HomeScreenProps {
-  // Ajoute les éventuelles props nécessaires
-}
-
-const windowWidth = Dimensions.get('window').width;
+interface HomeScreenProps {}
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
-  const { data: trendingContent } = useFetchTrendingAnimatedQuery();
-
+  const { data: trendingAnimated } = useFetchTrendingAnimatedQuery();
+  const { data: trendingFilms } = useFetchTrendingFilmsQuery();
+  const { data: trendingSeries } = useFetchTrendingSeriesQuery();
+  // console.log(trendingFilms)
   return (
-    <View>
-      {/* Contenu de la page d'accueil, tendances, barre de recherche, etc. */}
-      {/* <Text>Tendances Films: {JSON.stringify(trendingContent)}</Text> */}
-      <FlatList
-      horizontal
-        data={trendingContent}
-        renderItem={({ item }: { item: MinimalContent }) => ( // Specify the type of 'item'
-          <>
-            <Text>{item.name}</Text>
-            <Image
-             source={{uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`}}
-             style={styles.image}/>
-          </>
-        )}
+    <ScrollView>
+      <CustomList
+        data={trendingAnimated || []}
+        title="Tendances Animés"
+        stylePropTitleList={styles.firstTitleList}
       />
-      <Text>Tendances Films</Text>
-    </View>
+      <CustomList
+        data={trendingFilms || []}
+        title="Tendances Films"
+      />
+      <CustomList 
+        data={trendingSeries || []}
+        title="Tendances Séries" 
+        stylePropFlatList={styles.lastList}
+      />
+
+    </ScrollView>
   );
 };
 
-
+export default HomeScreen;
 
 const styles = StyleSheet.create({
-  flatListContainer: {
-    paddingTop: 10,
-    height: 200,
+  firstTitleList: {
+    marginTop: 20,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
   },
-
-  itemContainer: {
-
-    margin: 0,
-    width: windowWidth * 0.2,
-
-  },
-  image: {
-    flex: 1,
-    width: '100%',
-    aspectRatio: 16 / 9,
-    borderRadius: 8,
+  lastList: {
+    marginBottom: 0,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
   },
 });
-
-export default HomeScreen;

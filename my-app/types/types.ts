@@ -1,12 +1,17 @@
 export interface Content {
         id: number
-        name: string
+        name?: string
         platform?: string
         author?: string
-        genre?: string
-        poster_path: string
+        genre: Genre[]
+        poster_path?: string
         synopsis?: string
   }
+
+interface Genre {
+  id: number;
+  name: string;
+}
 
   export interface TrendingContent {
     id: string;
@@ -14,17 +19,17 @@ export interface Content {
   }
   
   export interface Animated extends Content {
-    nbrEpisode?: number
-    nbrSeason?: number
+    nbrEpisode: number
+    nbrSeason: number
   }
 
   export interface Film extends Content {
-    duration?: number;
+    duration: number;
   }
 
   export interface Series extends Content {
-    nbrEpisode?: number
-    nbrSeason?: number
+    nbrEpisode: number
+    nbrSeason: number
   }
 
   export interface TrendingSeriesResponse {
