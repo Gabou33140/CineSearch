@@ -10,7 +10,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const { data: trendingAnimated } = useFetchTrendingAnimatedQuery();
   const { data: trendingFilms } = useFetchTrendingFilmsQuery();
   const { data: trendingSeries } = useFetchTrendingSeriesQuery();
-  console.log(trendingFilms)
+  // console.log(trendingFilms)
   return (
     <ScrollView>
       <CustomList

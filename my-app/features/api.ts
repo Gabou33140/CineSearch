@@ -23,7 +23,7 @@ export const api = createApi({
       transformResponse: (response: {results: Film[]}, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
-        console.log(response.results)
+        // console.log(response.results)
         return response.results.map((Film) => ({
           id: Film.id,
           name: Film.title,
@@ -187,21 +187,20 @@ export const api = createApi({
       },
     }),
 
-    fetchContentDetailsById: builder.query<Film[] | Series[], { id: number; contentType: string }>({
+    fetchContentDetailsById: builder.query<Film | Series | Animated, { id: number; contentType: string }>({
       query: ({ id, contentType }) => `${contentType}/${id}?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR`,
-      transformResponse: (response: Film[] | Series[], meta: FetchBaseQueryMeta | undefined, arg: { id: number; contentType: string }): Film[] | Series[] | Promise<Film[] | Series[]> => {
-        // Ici, tu peux manipuler la réponse selon tes besoins
-        // Par exemple, sélectionner uniquement certaines propriétés
-        return response.map((Content) => ({
-          id: Content.id,
-          name: Content.name,
-          poster_path: Content.poster_path,
-          // ... autres propriétés que tu veux inclure
-        }));
+      transformResponse: (response: any, meta: FetchBaseQueryMeta | undefined, arg: { id: number; contentType: string }): Film | Series | Animated | Promise<Film | Series | Animated> => {
+        if (arg.contentType === 'tv') {
+          return transformTVResponse(response);
+        } else {
+          return transformMovieResponse(response);
+        }
       },
     }),
+    
   }),
 })
+
 
 export const {
   useLazyFetchTrendingSeriesQuery,

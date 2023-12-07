@@ -1,33 +1,25 @@
+// (tabs)/details.tsx
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { View } from '../../../components/Themed';
+import { ScrollView } from 'react-native';
+import { Text, View } from '../../../components/Themed';
 import Header from '../../../components/Header';
 import DetailsScreen from '../../../components/DetailsScreen';
 
-export default function TabDetails() {
-  return (
-    <View style={styles.container}>
-      <ScrollView>
-        <Header />  
-        <DetailsScreen id={0}  />
-      </ScrollView>
-    </View>
-    
-  );
+interface TabDetailsProps {
+  route: { params?: { id?: number } };
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+const TabDetails: React.FC<TabDetailsProps> = ({ route }) => {
+  const id = route.params?.id ?? 0;
+
+  return (
+    <View>
+      <ScrollView>
+        <Header />
+        <DetailsScreen id={id} />
+      </ScrollView>
+    </View>
+  );
+};
+
+export default TabDetails;
