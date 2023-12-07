@@ -10,11 +10,11 @@ import { useLazyFetchAmazonAnimatedQuery, useLazyFetchAmazonFilmsQuery, useLazyF
 const windowWidth = Dimensions.get('window').width;
 
 export type RootStackParamList = {
-  DetailsScreen: { id: number } | undefined;
+  DetailsScreen: { id: number, contentType : string };
 };
 
 interface CustomListProps {
-  data?: Film[] | Animated[] | Series[] | MinimalContent[] | undefined;
+  data?: Film[] | Animated[] | Series[] | MinimalContent[];
   title: string;
   stylePropFlatList?: ViewStyle;
   stylePropTitleList?: ViewStyle;
@@ -33,8 +33,11 @@ const CustomList: React.FC<CustomListProps> = ({ data, title, stylePropFlatList,
   const [triggerUpcomingAnimated, { data: UpcomingAnimated } ] = useLazyFetchUpcomingAnimatedQuery()
 
   const [isPageLoading, setIsPageLoading] = React.useState(false);
-  const navigateToDetail = (id: number) => {
-    navigation.navigate('details', { id });
+  
+  const navigateToDetail = (id: number, contentType:string) => {
+    console.log(id + " " + contentType)
+
+    navigation.navigate('details', { id, contentType });
   };
 
   useEffect(() => {
@@ -142,9 +145,10 @@ const CustomList: React.FC<CustomListProps> = ({ data, title, stylePropFlatList,
         data={chooseCorrectData(categorie) as any}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => {
-          console.log(item, 'item')
+          console.log(item.contentType)
+
           return(
-          <TouchableWithoutFeedback onPress={() => navigateToDetail(item.id)}>
+          <TouchableWithoutFeedback onPress={() => navigateToDetail(item.id,item.contentType)}>
             <View style={styles.flatListContainer}>
               <Text style={styles.name}>{item.name}</Text>
               <Image

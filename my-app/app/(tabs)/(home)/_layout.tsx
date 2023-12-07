@@ -3,10 +3,11 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabDetails from './details';
 import TabHome from './home';
+import CatalogueScreen from '../../../components/CatalogueScreen';
 
 const Stack = createStackNavigator();
 
-const TabHomeScreen = () => {
+const TabHomeScreen = (id: number, contentType: string) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -17,7 +18,7 @@ const TabHomeScreen = () => {
       <Stack.Screen
         name="details"
         options={{ headerShown: false }}
-        component={({ route }: { route: { params?: { id?: number } } }) => (
+        component={({ route }: { route: { params?: { id: number, contentType: string } } }) => (
           <TabDetails route={route} />
         )}
       />

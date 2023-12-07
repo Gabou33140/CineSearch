@@ -6,26 +6,24 @@ import { Film, Series } from '../types/types';
 
 interface ContentDetailsProps {
   id: number;
+  contentType: string;
 }
 
 interface DisplayDetailsProps {
-  contentType: 'tv' | 'movie';
+  contentType: string;
   content: Film | Series | undefined;
 }
 
-const ContentDetails: React.FC<ContentDetailsProps> = ({ id }) => {
-  const { data: dataMovie, isLoading: isMovieLoading } = useFetchContentDetailsByIdQuery({ id: id, contentType: 'movie' });
-  const { data: dataSeries, isLoading: isTVLoading } = useFetchContentDetailsByIdQuery({ id: id, contentType: 'tv' });
-
+const ContentDetails: React.FC<ContentDetailsProps> = ({ id, contentType }) => {
+  const { data: data, isLoading: isLoading } = useFetchContentDetailsByIdQuery({ id: id, contentType: contentType });
   return (
     <View>
-      {isMovieLoading || isTVLoading ? (
+      {isLoading ? (
         <Text>Chargement...</Text>
       ) : (
         <View>
 
-          {dataMovie || dataSeries ?
-            <DisplayDetails contentType={dataMovie ? 'movie' : 'tv'} content={dataMovie || dataSeries} />
+            <DisplayDetails contentType={contentType} content={data} />
             : <Text>Aucuns détails disponibles</Text>}
 
         </View>
@@ -36,7 +34,7 @@ const ContentDetails: React.FC<ContentDetailsProps> = ({ id }) => {
 
 
 const DisplayDetails: React.FC<DisplayDetailsProps> = ({ contentType, content }) => {
-  const fxlabelContentType = (contentType: 'tv' | 'movie') => {
+  const fxlabelContentType = (contentType: string) => {
     if (contentType === 'tv') {
       const genreIsAnimation = content?.genre.some((genre) => genre.id === 16);
       if (genreIsAnimation) {
@@ -49,6 +47,7 @@ const DisplayDetails: React.FC<DisplayDetailsProps> = ({ contentType, content })
     }
   }
   var labelContentType = fxlabelContentType(contentType)
+
   return (
     <ScrollView>
       <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginVertical: 10 }}>
@@ -73,11 +72,11 @@ const DisplayDetails: React.FC<DisplayDetailsProps> = ({ contentType, content })
             </Text>
           </>
         )}
-        {labelContentType === 'Film' && (
+        {/* {labelContentType === 'Film' && (
           <Text style={{ fontSize: 16, marginBottom: 10 }}>
             Durée: {(content as Film).duration} minutes
           </Text>
-        )}
+        )} */}
       </View>
     </ScrollView>
   );

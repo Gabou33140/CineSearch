@@ -10,6 +10,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Series) => ({
+          contentType: 'tv',
           id: Series.id,
           name: Series.name,
           poster_path: Series.poster_path || '',
@@ -25,6 +26,7 @@ export const api = createApi({
         // Par exemple, sélectionner uniquement certaines propriétés
         // console.log(response.results)
         return response.results.map((Film) => ({
+          contentType: 'movie',
           id: Film.id,
           name: Film.title,
           poster_path: Film.poster_path || '',
@@ -39,6 +41,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Animated) => ({
+          contentType: 'tv',
           id: Animated.id,
           name: Animated.name,
           poster_path: Animated.poster_path || '',
@@ -53,6 +56,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Film) => ({
+          contentType: 'movie',
           id: Film.id,
           name: Film.title,
           poster_path: Film.poster_path || '',
@@ -67,6 +71,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Film) => ({
+          contentType: 'movie',
           id: Film.id,
           name: Film.title,
           poster_path: Film.poster_path || '',
@@ -81,6 +86,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Series) => ({
+          contentType: 'tv',
           id: Series.id,
           name: Series.name,
           poster_path: Series.poster_path || '',
@@ -95,6 +101,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Series) => ({
+          contentType: 'tv',
           id: Series.id,
           name: Series.name,
           poster_path: Series.poster_path || '',
@@ -109,6 +116,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Animated) => ({
+          contentType: 'tv',
           id: Animated.id,
           name: Animated.name,
           poster_path: Animated.poster_path || '',
@@ -123,6 +131,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Animated) => ({
+          contentType: 'tv',
           id: Animated.id,
           name: Animated.name,
           poster_path: Animated.poster_path || '',
@@ -137,6 +146,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Series) => ({
+          contentType: 'tv',
           id: Series.id,
           name: Series.name,
           poster_path: Series.poster_path || '',
@@ -151,6 +161,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.results.map((Film) => ({
+          contentType: 'movie',
           id: Film.id,
           name: Film.title,
           poster_path: Film.poster_path || '',
@@ -165,6 +176,7 @@ export const api = createApi({
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
         return response.map((Animated) => ({
+          contentType: 'tv',
           id: Animated.id,
           name: Animated.name,
           poster_path: Animated.poster_path,
@@ -187,7 +199,7 @@ export const api = createApi({
       },
     }),
 
-    fetchContentDetailsById: builder.query<Film | Series | Animated, { id: number; contentType: 'movie' | 'tv' }>({
+    fetchContentDetailsById: builder.query<Film | Series | Animated, { id: number; contentType: string }>({
       query: ({ id, contentType }) => `${contentType}/${id}?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR`,
       transformResponse: (response: any, meta: FetchBaseQueryMeta | undefined, arg: { id: number; contentType: string }): Film | Series | Animated | Promise<Film | Series | Animated> => {
         if (arg.contentType === 'tv') {
@@ -212,6 +224,7 @@ const transformTVResponse = (response: any): Series => {
     genre: seriesResponse.genres,
     nbrSeason: seriesResponse.number_of_seasons,
     nbrEpisode: seriesResponse.number_of_episodes,
+    contentType: 'tv'
   };
 };
 
@@ -224,8 +237,9 @@ const transformMovieResponse = (response: any): Film => {
     poster_path: filmResponse.poster_path,
     synopsis: filmResponse.overview,
     genre: filmResponse.genres,
-    author: filmResponse.created_by[0].name,
+    //author: filmResponse.created_by[0].name,
     duration: filmResponse.runtime,
+    contentType: 'movie'
   };
 };
 
