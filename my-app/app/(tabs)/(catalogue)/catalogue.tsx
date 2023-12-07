@@ -3,12 +3,13 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from '../../../components/Themed';
 import React from 'react';
 import Header from '../../../components/Header';
+import CatalogueScreen from '../../../components/CatalogueScreen';
 
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
+    <View>
       <Header />
-
+      <CatalogueScreen />
     </View>
   );
 }
