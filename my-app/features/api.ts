@@ -256,6 +256,7 @@ export const {
   useFetchUpcomingAnimatedQuery,
   useFetchUpcomingFilmsQuery,
   useFetchUpcomingSeriesQuery,
+  useFetchContentDetailsByIdQuery
 } = api;
 
 export default () => {
