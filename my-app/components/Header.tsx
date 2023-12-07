@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, Text, TouchableOpacity, FlatList, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
+import { View, Image, Text, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView } from 'react-native';
 import SearchBar from '../components/SearchBar';
 
 const windowWidth = Dimensions.get('window').width;
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     height: '20%',
     width: '100%',
     backgroundColor: 'black',
-    // flex: 1,
      flexDirection: 'row',
      alignItems: 'center',
      justifyContent: 'center',
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     flex: 1,
-    justifyContent: 'center',  // Centrer verticalement
+    justifyContent: 'center',
     marginLeft: 20,
     alignItems: 'center',
   },
@@ -79,17 +78,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   dropDownMenu: {
-   // position: 'absolute',
-   // top: 50,
-   // left: 16,
     backgroundColor: 'yellow',
-    // borderRadius: 8,
-    // elevation: 5,
-    // padding: 8,
   },
   dropDownMenuItem: {
     fontSize: 16,
-   // paddingVertical: 8,
   },
 
   rightContainer: {
