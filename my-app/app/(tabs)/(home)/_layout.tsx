@@ -1,12 +1,28 @@
+// (tabs)/_layout.tsx
 import React from 'react';
-import { Stack } from 'expo-router';
+import { createStackNavigator } from '@react-navigation/stack';
+import TabDetails from './details';
+import TabHome from './home';
 
-export default function TabHomeScreen() {
+const Stack = createStackNavigator();
+
+const TabHomeScreen = () => {
   return (
-    <Stack>
-      <Stack.Screen name="home" options={{ headerShown: false }}  />
-      <Stack.Screen name="details" options={{ headerShown: false }}  />
-    </Stack>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="home"
+        options={{ headerShown: false }}
+        component={TabHome}
+      />
+      <Stack.Screen
+        name="details"
+        options={{ headerShown: false }}
+        component={({ route }: { route: { params?: { id?: number } } }) => (
+          <TabDetails route={route} />
+        )}
+      />
+    </Stack.Navigator>
   );
-}
+};
 
+export default TabHomeScreen;

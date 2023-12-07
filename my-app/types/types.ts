@@ -20,7 +20,6 @@ export interface Content {
 
   export interface Film extends Content {
     duration?: number;
-    title: string;
   }
 
   export interface Series extends Content {

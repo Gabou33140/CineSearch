@@ -23,7 +23,7 @@ export const api = createApi({
       transformResponse: (response: {results: Film[]}, meta: FetchBaseQueryMeta | undefined, arg: void): MinimalContent[] | Promise<MinimalContent[]> => {
         // Ici, tu peux manipuler la réponse selon tes besoins
         // Par exemple, sélectionner uniquement certaines propriétés
-        console.log(response.results)
+        // console.log(response.results)
         return response.results.map((Film) => ({
           id: Film.id,
           name: Film.title,
@@ -173,36 +173,46 @@ export const api = createApi({
       },
     }),
 
-    fetchContentDetailsById: builder.query<Film[] | Series[], { id: number; contentType: string }>({
+    fetchContentDetailsById: builder.query<Film | Series | Animated, { id: number; contentType: string }>({
       query: ({ id, contentType }) => `${contentType}/${id}?api_key=6383b6e3ace31d1ff86f07bddd32d91c&language=fr-FR`,
-      transformResponse: (response: Film[] | Series[], meta: FetchBaseQueryMeta | undefined, arg: { id: number; contentType: string }): Film[] | Series[] | Promise<Film[] | Series[]> => {
-        // Ici, tu peux manipuler la réponse selon tes besoins
-        // Par exemple, sélectionner uniquement certaines propriétés
-        return response.map((Content) => ({
-          id: Content.id,
-          name: Content.name,
-          poster_path: Content.poster_path,
-          // ... autres propriétés que tu veux inclure
-        }));
+      transformResponse: (response: any, meta: FetchBaseQueryMeta | undefined, arg: { id: number; contentType: string }): Film | Series | Animated | Promise<Film | Series | Animated> => {
+        if (arg.contentType === 'tv') {
+          return transformTVResponse(response);
+        } else {
+          return transformMovieResponse(response);
+        }
       },
     }),
+    
   }),
 })
 
-export const fetchContentDetailsByIdOrFallback = async (id: number) => {
-  // Essayer de récupérer les détails en tant que film
-  const movieDetails = await useFetchContentDetailsByIdQuery({ id, contentType: 'movie' }).data;
+// Fonction de transformation pour les séries
+const transformTVResponse = (response: any): Series => {
+  const seriesResponse = response as Series;
+  return {
+    id: seriesResponse.id,
+    name: seriesResponse.original_name,
+    poster_path: seriesResponse.poster_path,
+    synopsis: seriesResponse.overview,
+    genre: seriesResponse.genres,
+    nbrSeason: seriesResponse.number_of_seasons,
+    nbrEpisode: seriesResponse.number_of_episodes,
+  };
+};
 
-  // Si les détails du film existent, les renvoyer
-  if (movieDetails) {
-    return movieDetails;
-  }
-
-  // Si les détails du film n'existent pas, essayer de les récupérer en tant que série
-  const seriesDetails = await useFetchContentDetailsByIdQuery({ id, contentType: 'tv' }).data;
-
-  // Renvoyer les détails de la série, même s'ils sont nuls
-  return seriesDetails;
+// Fonction de transformation pour les films
+const transformMovieResponse = (response: any): Film => {
+  const filmResponse = response as Film;
+  return {
+    id: filmResponse.id,
+    name: filmResponse.original_title,
+    poster_path: filmResponse.poster_path,
+    synopsis: filmResponse.overview,
+    genre: filmResponse.genres,
+    author: filmResponse.created_by[0].name,
+    duration: filmResponse.runtime,
+  };
 };
 
 export const {
