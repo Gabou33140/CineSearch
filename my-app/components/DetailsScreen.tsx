@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View, Image } from 'react-native';
 import { useFetchContentDetailsByIdQuery } from '../features/api';
-import { Text} from '../components/Themed';
+import { Text } from '../components/Themed';
 import { Film, Series } from '../types/types';
 
 interface ContentDetailsProps {
@@ -9,16 +9,14 @@ interface ContentDetailsProps {
 }
 
 interface DisplayDetailsProps {
-  contentType: 'Serie' | 'Film' | 'Animé';
-  content: Film | Series | undefined ;
+  contentType: 'tv' | 'movie';
+  content: Film | Series | undefined;
 }
 
 const ContentDetails: React.FC<ContentDetailsProps> = ({ id }) => {
   const { data: dataMovie, isLoading: isMovieLoading } = useFetchContentDetailsByIdQuery({ id: id, contentType: 'movie' });
-  const { data: dataSeries, isLoading: isTVLoading }= useFetchContentDetailsByIdQuery({ id: id, contentType: 'tv' });
-  // Render les détails du contenu dans votre composant
+  const { data: dataSeries, isLoading: isTVLoading } = useFetchContentDetailsByIdQuery({ id: id, contentType: 'tv' });
 
-  console.log(id);
   return (
     <View>
       {isMovieLoading || isTVLoading ? (
@@ -26,9 +24,9 @@ const ContentDetails: React.FC<ContentDetailsProps> = ({ id }) => {
       ) : (
         <View>
 
-          {dataMovie || dataSeries ? 
-          <DisplayDetails contentType={dataMovie ? 'Film' : 'Serie'} content={dataMovie || dataSeries} /> 
-          : <Text>Aucuns détails disponibles</Text>}
+          {dataMovie || dataSeries ?
+            <DisplayDetails contentType={dataMovie ? 'movie' : 'tv'} content={dataMovie || dataSeries} />
+            : <Text>Aucuns détails disponibles</Text>}
 
         </View>
       )}
@@ -38,32 +36,34 @@ const ContentDetails: React.FC<ContentDetailsProps> = ({ id }) => {
 
 
 const DisplayDetails: React.FC<DisplayDetailsProps> = ({ contentType, content }) => {
-
-  if (contentType === 'Serie') {
-    const genreIsAnimation = content?.genre.some((genre) => genre.id === 16);
-    if (genreIsAnimation) {
-      contentType = "Animé";
+  const fxlabelContentType = (contentType: 'tv' | 'movie') => {
+    if (contentType === 'tv') {
+      const genreIsAnimation = content?.genre.some((genre) => genre.id === 16);
+      if (genreIsAnimation) {
+        return "Animé";
+      } else {
+        return "Série";
+      }
+    } else {
+      return "Film"
     }
-  else
-    contentType = "Film"
   }
-
-
+  var labelContentType = fxlabelContentType(contentType)
   return (
     <ScrollView>
       <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginVertical: 10 }}>
-        {contentType}
+        {labelContentType}
       </Text>
       <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginBottom: 10 }}>
         {content?.name}
       </Text>
       <Image
-        source={{ uri: `https://image.tmdb.org/t/p/original/${content?.poster_path}`}}
+        source={{ uri: `https://image.tmdb.org/t/p/original/${content?.poster_path}` }}
         style={{ width: '100%', height: 300, resizeMode: 'cover', marginBottom: 10 }}
       />
       <View style={{ marginHorizontal: 20, marginBottom: 10 }}>
         <Text style={{ fontSize: 16, marginBottom: 10 }}>{content?.synopsis}</Text>
-        {contentType === 'Serie' && (
+        {labelContentType === 'Serie' && (
           <>
             <Text style={{ fontSize: 16, marginBottom: 10 }}>
               Nombre de saisons: {(content as Series).nbrSeason}
@@ -73,7 +73,7 @@ const DisplayDetails: React.FC<DisplayDetailsProps> = ({ contentType, content })
             </Text>
           </>
         )}
-        {contentType === 'Film' && (
+        {labelContentType === 'Film' && (
           <Text style={{ fontSize: 16, marginBottom: 10 }}>
             Durée: {(content as Film).duration} minutes
           </Text>
