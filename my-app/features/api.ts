@@ -201,6 +201,33 @@ export const api = createApi({
   }),
 })
 
+// Fonction de transformation pour les séries
+const transformTVResponse = (response: any): Series => {
+  const seriesResponse = response as Series;
+  return {
+    id: seriesResponse.id,
+    name: seriesResponse.original_name,
+    poster_path: seriesResponse.poster_path,
+    synopsis: seriesResponse.overview,
+    genre: seriesResponse.genres,
+    nbrSeason: seriesResponse.number_of_seasons,
+    nbrEpisode: seriesResponse.number_of_episodes,
+  };
+};
+
+// Fonction de transformation pour les films
+const transformMovieResponse = (response: any): Film => {
+  const filmResponse = response as Film;
+  return {
+    id: filmResponse.id,
+    name: filmResponse.original_title,
+    poster_path: filmResponse.poster_path,
+    synopsis: filmResponse.overview,
+    genre: filmResponse.genres,
+    author: filmResponse.created_by[0].name,
+    duration: filmResponse.runtime,
+  };
+};
 
 export const {
   useLazyFetchTrendingSeriesQuery,
