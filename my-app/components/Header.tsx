@@ -27,19 +27,12 @@ const Header = () => {
         <Image source={require('../assets/images/logo_cinesearch.jpg')} style={styles.logoImage} />
       </View>
       <View style={styles.rightContainer}>
-      <View style={{ flex: 1, marginTop: 20, marginLeft: 20 }}>
-        <View style={{ flexDirection: 'row' }}>
-          {categories.map((category) => (
-            <TouchableOpacity key={category} onPress={() => handleCategorySelect(category)}>
-              <Text style={{ color: selectedCategory === category ? 'red' : 'white', marginRight: 10, marginTop: -10, marginLeft: 15}}>{category}</Text>
-            </TouchableOpacity>
-          ))}
+      <View style={{ flex: 1, marginTop: 40, marginRight: -150 }}>
         </View>
         <View style={styles.searchContainer}>
           <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} />
         </View>
         {renderDropDownMenu()}
-      </View>
       </View>
     </SafeAreaView>
   );

@@ -23,17 +23,19 @@ const CatalogueScreen: React.FC<CatalogueScreenProps> = () => {
 
 
   return (
-<ScrollView style={styles.container}>
-      <View style={styles.buttonsContainer}>
-        <Button title="Animés Netflix" onPress={() => handleCategorySelect('Animés Netflix')} />
-        <Button title="Film Netflix" onPress={() => handleCategorySelect('Film Netflix')} />
+<ScrollView>
+      <View style={styles.allButtonsContainer}>
+
+      <View style={styles.buttonsSeriesContainer}>
         <Button title="Séries Netflix" onPress={() => handleCategorySelect('Séries Netflix')} />
-        <Button title="Animés Amazon" onPress={() => handleCategorySelect('Animés Amazon')} />
-        <Button title="Films Amazon" onPress={() => handleCategorySelect('Films Amazon')} />
         <Button title="Séries Amazon" onPress={() => handleCategorySelect('Séries Amazon')} />
+        <Button title="Séries à venir" onPress={() => handleCategorySelect('Séries à venir')} />    
+        <Button title="Film Netflix" onPress={() => handleCategorySelect('Film Netflix')} />
+        <Button style = {styles.button} title="Films Amazon" onPress={() => handleCategorySelect('Films Amazon')} />
         <Button title="Films à venir" onPress={() => handleCategorySelect('Films à venir')} />
-        <Button title="Séries à venir" onPress={() => handleCategorySelect('Séries à venir')} />
-        <Button title="Animés à venir" onPress={() => handleCategorySelect('Animés à venir')} />
+        <Button title="Animés Netflix" onPress={() => handleCategorySelect('Animés Netflix')} />
+        <Button title="Animés Amazon" onPress={() => handleCategorySelect('Animés Amazon')} />     
+      </View>
       </View>
 
       <ScrollView>
@@ -43,6 +45,7 @@ const CatalogueScreen: React.FC<CatalogueScreenProps> = () => {
           stylePropTitleList={styles.firstTitleList}
         />
       </ScrollView>
+
     </ScrollView>
   );
 };
@@ -50,53 +53,40 @@ const CatalogueScreen: React.FC<CatalogueScreenProps> = () => {
   
 
 const styles = StyleSheet.create({
-  FirstTitleContainer: {
-    marginTop: 5,
-  },
-  TitleContainer: {
-    paddingTop: 3,
-    fontWeight: 'bold',
-  },
-  flatListContainer: {
-    height: '100%',
-    overflowX: 'hidden',
-  },
-  flatList: {
-    paddingTop: 20,
-    paddingRight: 5,
-    marginBottom: 100,
-    overflowX: 'hidden',
-  },
-  flatListMarginBottom: {
-    marginBottom: 5,
-  },
-  itemContainer: {
-    margin: 0,
-    width: windowWidth * 0.5,
-    height: 150,
-  },
-  name: {
-    color: 'white',
-    width: '100%',
-  },
-  image: {
-    flex: 1,
-    width: '100%',
-    aspectRatio: 16 / 9,
-    borderRadius: 8,
-    margin: 5,
-    marginLeft: 0,
-    marginRight: 10,
-  },
-
-  buttonsContainer: {
+  
+  allButtonsContainer: {
     flexDirection: 'row',
     height: 'auto',
     width: '100%',
-    marginBottom: 16,
     backgroundcolor : 'green',
-    maxWidth: windowWidth,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+  },
+
+  buttonsSeriesContainer: {
+    flexDirection: 'row',
+    height: 'auto',
+    width: '100%',
+    backgroundcolor : 'green',
+    justifyItems: 'center',
+    flexWrap: 'wrap',
+  },
+
+  buttonsFilmsContainer: {
+    flexDirection: 'row',
+    height: 'auto',
+    width: '30%',
+    backgroundcolor : 'green',
+    justifyItems: 'left',
+    flexWrap: 'wrap',
+  },
+
+  buttonsAnimatedContainer: {
+    flexDirection: 'row',
+    height: 'auto',
+    width: '30%',
+    backgroundcolor : 'green',
+    justifyItems: 'left',
     flexWrap: 'wrap',
   },
 
@@ -104,7 +94,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 25,
     backgroundColor: 'white',
-    color : 'white',
+    color : 'black',
   },
   
 
