@@ -24,7 +24,7 @@ const ContentDetails: React.FC<ContentDetailsProps> = ({ id, contentType }) => {
         <View>
 
             <DisplayDetails contentType={contentType} content={data} />
-            : <Text>Aucuns détails disponibles</Text>}
+             <Text>: Aucuns détails disponibles</Text>
 
         </View>
       )}
