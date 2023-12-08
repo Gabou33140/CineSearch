@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { FlatList, View, Image, StyleSheet, Dimensions, Button, ActivityIndicator } from 'react-native';
-import { Text } from '../components/Themed';
-import {useLazyFetchAmazonAnimatedQuery, useLazyFetchAmazonFilmsQuery, useLazyFetchAmazonSeriesQuery, useLazyFetchNetflixAnimatedQuery, useLazyFetchNetflixFilmsQuery, useLazyFetchNetflixSeriesQuery, useLazyFetchUpcomingAnimatedQuery, useLazyFetchUpcomingFilmsQuery, useLazyFetchUpcomingSeriesQuery } from '../features/api';
+import {  View, StyleSheet, Dimensions, Button, ActivityIndicator } from 'react-native';
 import CustomList from './CustomList';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Animated, MinimalContent } from '../types/types';
+
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -56,7 +54,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   TitleContainer: {
-    paddingTop: 3, // Ajoutez un espacement en haut
+    paddingTop: 3,
     fontWeight: 'bold',
   },
   flatListContainer: {
@@ -64,18 +62,17 @@ const styles = StyleSheet.create({
     overflowX: 'hidden',
   },
   flatList: {
-    paddingTop: 20, // Ajoutez un espacement en haut
-    paddingRight: 5, // Ajoutez un espacement à droite
+    paddingTop: 20,
+    paddingRight: 5,
     marginBottom: 100,
-    overflowX: 'hidden', // Masquer les éléments qui dépassent de la zone visible
+    overflowX: 'hidden',
   },
   flatListMarginBottom: {
-    marginBottom: 5,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
+    marginBottom: 5,
   },
   itemContainer: {
-    //position: 'relative',
     margin: 0,
-    width: windowWidth * 0.5, // Réduisez la largeur du conteneur
+    width: windowWidth * 0.5,
     height: 150,
   },
   name: {
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
   
 
   firstTitleList: {
-    marginTop: 20,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
+    marginTop: 20,
   },
 
 });

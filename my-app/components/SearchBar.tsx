@@ -15,7 +15,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   const handleSearch = useCallback(() => {
     onSearch(searchTerm);
-    // Assurez-vous que useFetchSearchResultsQuery est utilisé correctement dans votre composant
     // useFetchSearchResultsQuery({ searchTerm });
   }, [onSearch, searchTerm]);
 
@@ -25,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         placeholder="Films, séries, animés..."
         value={searchTerm}
         onChangeText={handleInputChange}
-        onSubmitEditing={handleSearch}  // Cette fonction sera appelée lorsque l'utilisateur appuie sur Entrée
+        onSubmitEditing={handleSearch}
         style={styles.input}
       />
     </View>

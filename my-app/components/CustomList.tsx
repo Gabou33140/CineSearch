@@ -1,4 +1,3 @@
-// CustomList.tsx
 import React, { useEffect } from 'react';
 import { FlatList, Image, StyleSheet, Dimensions, TouchableWithoutFeedback, View, ViewStyle, ActivityIndicator } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -167,7 +166,6 @@ const CustomList: React.FC<CustomListProps> = ({ data, title, stylePropFlatList,
 
 const styles = StyleSheet.create({
   name: {
-    // color: 'black',
     width: '100%',
   },
   TitleContainer: {
@@ -179,12 +177,12 @@ const styles = StyleSheet.create({
     overflowX: 'hidden',
   },
   flatList: {
-    paddingTop: 5, // Ajoutez un espacement en haut
+    paddingTop: 5,
     marginBottom: 100,
-    overflowX: 'hidden', // Masquer les éléments qui dépassent de la zone visible
+    overflowX: 'hidden',
   },
   flatListMarginBottom: {
-    marginBottom: 20,  // Ajustez la marge inférieure pour réduire l'espacement entre les FlatList
+    marginBottom: 20,
   },
   itemContainer: {
     margin: 5,
