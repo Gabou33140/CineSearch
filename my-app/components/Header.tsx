@@ -36,7 +36,7 @@ const Header = () => {
           ))}
         </View>
         <View style={styles.searchContainer}>
-          <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} />
+          <SearchBar/>
         </View>
         {renderDropDownMenu()}
       </View>
