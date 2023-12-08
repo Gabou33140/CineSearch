@@ -10,6 +10,16 @@ export interface Content {
 }
 
 interface Genre {
+id: number;
+name: string;
+}
+
+export interface searchResults {
+  page : number;
+  results: result[];
+}
+
+interface result {
   id: number;
   name: string;
 }

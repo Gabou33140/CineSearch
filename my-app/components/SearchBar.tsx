@@ -1,22 +1,18 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
-import { useFetchSearchResultsQuery } from '../features/api';
+import SearchResults from './SearchResults';
 
-interface SearchBarProps {
-  onSearch: (searchTerm: string) => void;
-}
-
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (text: string) => {
     setSearchTerm(text);
   };
 
-  const handleSearch = useCallback(() => {
-    onSearch(searchTerm);
-    // useFetchSearchResultsQuery({ searchTerm });
-  }, [onSearch, searchTerm]);
+  const handleSearch = () => {
+    console.log(searchTerm);
+    <SearchResults SearchTerm={searchTerm}/>
+  };
 
   return (
     <View style={styles.container}>
@@ -45,7 +41,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginRight: 10,
     paddingLeft: 8,
-    backgroundColor: 'white',
   },
 });
 

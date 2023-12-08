@@ -30,7 +30,7 @@ const Header = () => {
       <View style={{ flex: 1, marginTop: 40, marginRight: -150 }}>
         </View>
         <View style={styles.searchContainer}>
-          <SearchBar onSearch={(searchTerm) => console.log(searchTerm)} />
+          <SearchBar/>
         </View>
         {renderDropDownMenu()}
       </View>
